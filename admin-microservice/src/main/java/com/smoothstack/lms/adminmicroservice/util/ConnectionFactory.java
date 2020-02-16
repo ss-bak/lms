@@ -17,7 +17,7 @@ public class ConnectionFactory {
 	@Value("${spring.datasource.driver-class-name}")
 	private String driver;
 
-	@Value("${spring.datasource.url:jdbc:h2:file}")
+	@Value("${spring.datasource.url}")
 	private String url;
 
 	@Value("${spring.datasource.username}")

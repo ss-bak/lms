@@ -16,9 +16,9 @@ public class CopiesDAO extends BaseDAO<Copies> {
 		super();
 	}
 
-	public void addCopies(Copies copies) throws ClassNotFoundException, SQLException {
-		save("insert into tbl_book_copies (bookId,branchId,noOfCopies) values (?,?,?)", 
-				new Object[] {copies.getBookId(),copies.getBranchId(),copies.getNoOfCopies()});
+	public Integer addCopies(Copies copies) throws ClassNotFoundException, SQLException {
+		return save("insert into tbl_book_copies (branchId,bookId,noOfCopies) values (?,?,?)", 
+				new Object[] {copies.getBranchId(),copies.getBookId(),copies.getNoOfCopies()});
 	}
 
 	public void updateCopies(Copies copies) throws SQLException, ClassNotFoundException {

@@ -16,8 +16,8 @@ public class BorrowerDAO extends BaseDAO<Borrower> {
 		super();
 	}
 
-	public void addBorrower(Borrower borrower) throws ClassNotFoundException, SQLException {
-		save("insert into tbl_borrower (name,address,phone) values (?,?,?)",
+	public Integer addBorrower(Borrower borrower) throws ClassNotFoundException, SQLException {
+		return save("insert into tbl_borrower (name,address,phone) values (?,?,?)",
 				new Object[] { borrower.getName(), borrower.getAddress(), borrower.getPhone() });
 	}
 
@@ -36,6 +36,10 @@ public class BorrowerDAO extends BaseDAO<Borrower> {
 
 	public List<Borrower> readBorrower() throws ClassNotFoundException, SQLException {
 		return read("select * from tbl_borrower", null);
+	}
+	
+	public Borrower readBorrowerById(Integer cardNo) throws ClassNotFoundException, SQLException {
+		return read("select * from tbl_borrower where cardNo = ?", new Object[] {cardNo}).get(0);
 	}
 
 	@Override
