@@ -1,47 +1,32 @@
 package com.smoothstack.lms.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 
 import com.smoothstack.lms.model.Publisher;
 
-public class PublisherDao extends BaseDao<Publisher> {
+@Component
+public class PublisherDao {
 
-	public PublisherDao(Connection connection) {
-		super(connection);
+	@Autowired
+	JdbcTemplate jdbcTemplate;
+
+	public Publisher readOneFirstLevel(int id) throws SQLException {
+		return jdbcTemplate.queryForObject("select * from tbl_library_branch where tbl_library_branch.branchId = ?",
+				new Object[] { id }, (rs, rowNum) -> extractDataFirstLevel(rs));
 	}
 
-	public Publisher readOneFirstLevel(Integer id) throws SQLException {
-		PreparedStatement pstmt = connection.prepareStatement("select * from tbl_publisher where publisherId = ?");
-		pstmt.setObject(1, id);
-		ResultSet rs = pstmt.executeQuery();
-		if (rs.next()) {
-			Publisher publisher = new Publisher();
-			publisher.setId(rs.getInt("publisherId"));
-			publisher.setName(rs.getString("publisherName"));
-			publisher.setAddress(rs.getString("publisherAddress"));
-			publisher.setAddress(rs.getString("publisherPhone"));
-			return publisher;
-		}
-		return null;
-	}
-
-	@Override
-	protected List<Publisher> extractDataFirstLevel(ResultSet rs) throws SQLException {
-		List<Publisher> publishers = new ArrayList<>();
-		while (rs.next()) {
-			Publisher publisher = new Publisher();
-			publisher.setId(rs.getInt("publisherId"));
-			publisher.setName(rs.getString("publisherName"));
-			publisher.setAddress(rs.getString("publisherAddress"));
-			publisher.setAddress(rs.getString("publisherPhone"));
-			publishers.add(publisher);
-		}
-		return publishers;
+	private Publisher extractDataFirstLevel(ResultSet rs) throws SQLException {
+		Publisher publisher = new Publisher();
+		publisher.setId(rs.getInt("publisherId"));
+		publisher.setName(rs.getString("publisherName"));
+		publisher.setAddress(rs.getString("publisherAddress"));
+		publisher.setPhone(rs.getString("publisherPhone"));
+		return publisher;
 	}
 
 }

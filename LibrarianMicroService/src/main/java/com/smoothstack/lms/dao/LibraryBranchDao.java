@@ -1,96 +1,65 @@
 package com.smoothstack.lms.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 
 import com.smoothstack.lms.model.LibraryBranch;
 
-public class LibraryBranchDao extends BaseDao<LibraryBranch> {
+@Component
+public class LibraryBranchDao {
 
-	public LibraryBranchDao(Connection connection) {
-		super(connection);
-	}
+	@Autowired
+	JdbcTemplate jdbcTemplate;
 
-	public void update(LibraryBranch libraryBranch) throws SQLException {
-		save("update tbl_library_branch set branchName = ?, branchAddress = ? where branchId = ?",
-				new Object[] { libraryBranch.getName(), libraryBranch.getAddress(), libraryBranch.getId() });
-	}
+	@Autowired
+	private BookDao bookDao;
+
+	@Autowired
+	private BorrowerDao borrowerDao;
 
 	public List<LibraryBranch> read() throws SQLException {
-		return extractData(connection.prepareStatement("select * from tbl_library_branch").executeQuery());
+		return jdbcTemplate.query("select * from tbl_library_branch", (rs, rowNum) -> extractData(rs));
+	}
+
+	public List<LibraryBranch> readFirstLevel(String sql, Object[] values) throws SQLException {
+		return jdbcTemplate.query(sql, values, (rs, rowNum) -> extractDataFirstLevel(rs));
 	}
 
 	public LibraryBranch readOne(int id) throws SQLException {
-		PreparedStatement pstmt = connection.prepareStatement("select * from tbl_library_branch where branchId = ?");
-		pstmt.setObject(1, id);
-		ResultSet rs = pstmt.executeQuery();
-		if (rs.next()) {
-			BookDao bookDao = new BookDao(connection);
-			BorrowerDao borrowerDao = new BorrowerDao(connection);
-			LibraryBranch libraryBranch = new LibraryBranch();
-			libraryBranch.setId(rs.getInt("branchId"));
-			libraryBranch.setName(rs.getString("branchName"));
-			libraryBranch.setAddress(rs.getString("branchAddress"));
-			libraryBranch.setBooks(bookDao.readFirstLevel(
-					"select * from tbl_book inner join tbl_book_copies on tbl_book.bookId = tbl_book_copies.bookId where tbl_book_copies.branchId = ?",
-					new Object[] { rs.getInt("branchId") }));
-			libraryBranch.setBorrowers(borrowerDao.readFirstLevel(
-					"select * from tbl_borrower inner join tbl_book_loans on tbl_borrower.cardNo = tbl_book_loans.cardNo where tbl_book_loans.branchId = ?",
-					new Object[] { rs.getInt("branchId") }));
-			return libraryBranch;
-		}
-		return null;
+		return jdbcTemplate.queryForObject("select * from tbl_library_branch where tbl_library_branch.branchId = ?",
+				new Object[] { id }, (rs, rowNum) -> extractData(rs));
 	}
 
-	public LibraryBranch readOneFirstLevel(int id) throws SQLException {
-		PreparedStatement pstmt = connection.prepareStatement("select * from tbl_library_branch where branchId = ?");
-		pstmt.setObject(1, id);
-		ResultSet rs = pstmt.executeQuery();
-		if (rs.next()) {
-			LibraryBranch libraryBranch = new LibraryBranch();
-			libraryBranch.setId(rs.getInt("branchId"));
-			libraryBranch.setName(rs.getString("branchName"));
-			libraryBranch.setAddress(rs.getString("branchAddress"));
-			return libraryBranch;
-		}
-		return null;
+	public void update(LibraryBranch libraryBranch) throws SQLException {
+		jdbcTemplate.update("update tbl_library_branch set branchName = ?, branchAddress = ? where branchId = ?",
+				new Object[] { libraryBranch.getName(), libraryBranch.getAddress(), libraryBranch.getId() });
 	}
 
-	protected List<LibraryBranch> extractData(ResultSet rs) throws SQLException {
-		List<LibraryBranch> libraryBranches = new ArrayList<LibraryBranch>();
-		BookDao bookDao = new BookDao(connection);
-		BorrowerDao borrowerDao = new BorrowerDao(connection);
-		while (rs.next()) {
-			LibraryBranch libraryBranch = new LibraryBranch();
-			libraryBranch.setId(rs.getInt("branchId"));
-			libraryBranch.setName(rs.getString("branchName"));
-			libraryBranch.setAddress(rs.getString("branchAddress"));
-			libraryBranch.setBooks(bookDao.readFirstLevel(
-					"select * from tbl_book inner join tbl_book_copies on tbl_book.bookId = tbl_book_copies.bookId where tbl_book_copies.branchId = ?",
-					new Object[] { rs.getInt("branchId") }));
-			libraryBranch.setBorrowers(borrowerDao.readFirstLevel(
-					"select * from tbl_borrower inner join tbl_book_loans on tbl_borrower.cardNo = tbl_book_loans.cardNo where tbl_book_loans.branchId = ?",
-					new Object[] { rs.getInt("branchId") }));
-			libraryBranches.add(libraryBranch);
-		}
-		return libraryBranches;
+	private LibraryBranch extractData(ResultSet rs) throws SQLException {
+		LibraryBranch libraryBranch = new LibraryBranch();
+		libraryBranch.setId(rs.getInt("branchId"));
+		libraryBranch.setName(rs.getString("branchName"));
+		libraryBranch.setAddress(rs.getString("branchAddress"));
+		libraryBranch.setBooks(bookDao.readFirstLevel(
+				"select * from tbl_book inner join tbl_book_copies on tbl_book.bookId = tbl_book_copies.bookId where tbl_book_copies.branchId = ?",
+				new Object[] { rs.getInt("branchId") }));
+		libraryBranch.setBorrowers(borrowerDao.readFirstLevel(
+				"select * from tbl_borrower inner join tbl_book_loans on tbl_borrower.cardNo = tbl_book_loans.cardNo where tbl_book_loans.branchId = ?",
+				new Object[] { rs.getInt("branchId") }));
+		return libraryBranch;
 	}
 
-	@Override
-	protected List<LibraryBranch> extractDataFirstLevel(ResultSet rs) throws SQLException {
-		List<LibraryBranch> libraryBranches = new ArrayList<LibraryBranch>();
-		while (rs.next()) {
-			LibraryBranch libraryBranch = new LibraryBranch();
-			libraryBranch.setId(rs.getInt("branchId"));
-			libraryBranch.setName(rs.getString("branchName"));
-			libraryBranch.setAddress(rs.getString("branchAddress"));
-			libraryBranches.add(libraryBranch);
-		}
-		return libraryBranches;
+	private LibraryBranch extractDataFirstLevel(ResultSet rs) throws SQLException {
+		LibraryBranch libraryBranch = new LibraryBranch();
+		libraryBranch.setId(rs.getInt("branchId"));
+		libraryBranch.setName(rs.getString("branchName"));
+		libraryBranch.setAddress(rs.getString("branchAddress"));
+		return libraryBranch;
 	}
 
 }
