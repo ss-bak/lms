@@ -57,7 +57,8 @@ public class LibrarianController {
 		return new ResponseEntity<LibraryBranch>(libraryBranch, HttpStatus.OK);
 	}
 
-	@RequestMapping(path = "/lms/librarybranches", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = "/lms/librarybranches", method = RequestMethod.PUT, consumes = {
+			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> updateLibraryBranch(@RequestBody LibraryBranch libraryBranch) {
 		if (libraryBranch == null || libraryBranch.getId() == null || libraryBranch.getName() == null
 				|| libraryBranch.getAddress() == null)
@@ -119,7 +120,8 @@ public class LibrarianController {
 		return new ResponseEntity<BookCopy>(bookCopy, HttpStatus.OK);
 	}
 
-	@RequestMapping(path = "/lms/bookcopies", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = "/lms/bookcopies", method = RequestMethod.PUT, consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> updateBookCopy(@RequestBody BookCopy bookCopy) {
 		if (bookCopy == null)
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
