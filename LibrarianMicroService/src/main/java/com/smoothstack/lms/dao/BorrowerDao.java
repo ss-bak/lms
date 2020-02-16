@@ -14,29 +14,10 @@ import com.smoothstack.lms.model.Borrower;
 public class BorrowerDao {
 
 	@Autowired
-	JdbcTemplate jdbcTemplate;
-
-	@Autowired
-	private BookDao bookDao;
-
-	public List<Borrower> read() throws SQLException {
-		return jdbcTemplate.query("select * from tbl_borrower", (rs, rowNum) -> extractData(rs));
-	}
+	private JdbcTemplate jdbcTemplate;
 
 	public List<Borrower> readFirstLevel(String sql, Object[] values) throws SQLException {
 		return jdbcTemplate.query(sql, values, (rs, rowNum) -> extractDataFirstLevel(rs));
-	}
-
-	private Borrower extractData(ResultSet rs) throws SQLException {
-		Borrower borrower = new Borrower();
-		borrower.setCardNumber(rs.getInt("cardNo"));
-		borrower.setName(rs.getString("name"));
-		borrower.setAddress(rs.getString("address"));
-		borrower.setPhone(rs.getString("phone"));
-		borrower.setBooks(bookDao.readFirstLevel(
-				"select * from tbl_book inner join tbl_book_loans on tbl_book.bookId = tbl_book_loans.bookId where tbl_book_loans.cardNo = ?",
-				new Object[] { rs.getInt("cardNo") }));
-		return borrower;
 	}
 
 	private Borrower extractDataFirstLevel(ResultSet rs) throws SQLException {

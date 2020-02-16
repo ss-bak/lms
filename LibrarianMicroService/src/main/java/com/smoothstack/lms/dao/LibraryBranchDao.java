@@ -14,7 +14,7 @@ import com.smoothstack.lms.model.LibraryBranch;
 public class LibraryBranchDao {
 
 	@Autowired
-	JdbcTemplate jdbcTemplate;
+	private JdbcTemplate jdbcTemplate;
 
 	@Autowired
 	private BookDao bookDao;
@@ -33,6 +33,11 @@ public class LibraryBranchDao {
 	public LibraryBranch readOne(int id) throws SQLException {
 		return jdbcTemplate.queryForObject("select * from tbl_library_branch where tbl_library_branch.branchId = ?",
 				new Object[] { id }, (rs, rowNum) -> extractData(rs));
+	}
+
+	public LibraryBranch readOneFirstLevel(int id) throws SQLException {
+		return jdbcTemplate.queryForObject("select * from tbl_library_branch where tbl_library_branch.branchId = ?",
+				new Object[] { id }, (rs, rowNum) -> extractDataFirstLevel(rs));
 	}
 
 	public void update(LibraryBranch libraryBranch) throws SQLException {

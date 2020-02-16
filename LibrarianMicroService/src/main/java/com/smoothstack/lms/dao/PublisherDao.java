@@ -13,10 +13,10 @@ import com.smoothstack.lms.model.Publisher;
 public class PublisherDao {
 
 	@Autowired
-	JdbcTemplate jdbcTemplate;
+	private JdbcTemplate jdbcTemplate;
 
 	public Publisher readOneFirstLevel(int id) throws SQLException {
-		return jdbcTemplate.queryForObject("select * from tbl_library_branch where tbl_library_branch.branchId = ?",
+		return jdbcTemplate.queryForObject("select * from tbl_publisher where tbl_publisher.publisherId = ?",
 				new Object[] { id }, (rs, rowNum) -> extractDataFirstLevel(rs));
 	}
 

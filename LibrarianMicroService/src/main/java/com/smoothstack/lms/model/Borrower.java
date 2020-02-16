@@ -54,4 +54,5 @@ public class Borrower {
 		return "Borrower [cardNumber=" + cardNumber + ", name=" + name + ", address=" + address + ", phone=" + phone
 				+ ", books=" + books + "]";
 	}
+	
 }

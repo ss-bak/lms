@@ -15,7 +15,7 @@ public class Book {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -72,4 +72,5 @@ public class Book {
 		return "Book [id=" + id + ", title=" + title + ", genres=" + genres + ", authors=" + authors + ", publisher="
 				+ publisher + ", branches=" + branches + ", borrowers=" + borrowers + "]";
 	}
+	
 }

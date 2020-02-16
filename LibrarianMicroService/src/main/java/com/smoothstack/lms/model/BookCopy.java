@@ -33,4 +33,5 @@ public class BookCopy {
 	public String toString() {
 		return "BookCopy [book=" + book + ", libraryBranch=" + libraryBranch + ", amount=" + amount + "]";
 	}
+
 }

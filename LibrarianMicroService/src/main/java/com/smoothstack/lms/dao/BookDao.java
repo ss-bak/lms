@@ -15,7 +15,7 @@ import com.smoothstack.lms.model.Publisher;
 public class BookDao {
 
 	@Autowired
-	JdbcTemplate jdbcTemplate;
+	private JdbcTemplate jdbcTemplate;
 
 	@Autowired
 	private PublisherDao publisherDao;
@@ -38,6 +38,11 @@ public class BookDao {
 
 	public List<Book> readFirstLevel(String sql, Object[] values) throws SQLException {
 		return jdbcTemplate.query(sql, values, (rs, rowNum) -> extractDataFirstLevel(rs));
+	}
+
+	public Book readOneFirstLevel(int id) throws SQLException {
+		return jdbcTemplate.queryForObject("select * from tbl_book where tbl_book.bookId = ?", new Object[] { id },
+				(rs, rowNum) -> extractDataFirstLevel(rs));
 	}
 
 	private Book extractData(ResultSet rs) throws SQLException {

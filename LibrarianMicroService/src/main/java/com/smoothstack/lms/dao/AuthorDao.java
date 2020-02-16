@@ -14,27 +14,10 @@ import com.smoothstack.lms.model.Author;
 public class AuthorDao {
 
 	@Autowired
-	protected JdbcTemplate jdbcTemplate;
-
-	@Autowired
-	private BookDao bookDao;
-
-	public List<Author> read() throws SQLException {
-		return jdbcTemplate.query("select * from tbl_author", (rs, rowNum) -> extractData(rs));
-	}
+	private JdbcTemplate jdbcTemplate;
 
 	public List<Author> readFirstLevel(String sql, Object[] values) throws SQLException {
 		return jdbcTemplate.query(sql, values, (rs, rowNum) -> extractDataFirstLevel(rs));
-	}
-
-	private Author extractData(ResultSet rs) throws SQLException {
-		Author author = new Author();
-		author.setId(rs.getInt("authorId"));
-		author.setName(rs.getString("authorName"));
-		author.setBooks(bookDao.readFirstLevel(
-				"select * from tbl_book inner join tbl_book_authors on tbl_book.bookId = tbl_book_authors.bookId where tbl_book_authors.authorId = ?",
-				new Object[] { rs.getInt("authorId") }));
-		return author;
 	}
 
 	private Author extractDataFirstLevel(ResultSet rs) throws SQLException {
