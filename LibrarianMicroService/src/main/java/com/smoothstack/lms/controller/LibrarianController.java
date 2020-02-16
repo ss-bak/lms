@@ -126,7 +126,7 @@ public class LibrarianController {
 		if (bookCopy.getBook() == null || bookCopy.getBook().getId() == null || bookCopy.getBook().getId() <= 0)
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		if (bookCopy.getLibraryBranch() == null || bookCopy.getLibraryBranch().getId() == null
-				|| bookCopy.getLibraryBranch().getId() < 1)
+				|| bookCopy.getLibraryBranch().getId() <= 0)
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		if (bookCopy.getAmount() == null || bookCopy.getAmount() < 0)
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
