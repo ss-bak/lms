@@ -31,7 +31,6 @@ public class LibrarianController {
 		try {
 			libraryBranches = librarianService.getLibraryBranches();
 		} catch (SQLException e) {
-			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<List<LibraryBranch>>(libraryBranches, HttpStatus.OK);
@@ -52,7 +51,6 @@ public class LibrarianController {
 		try {
 			libraryBranch = librarianService.getLibraryBranchById(parsedId);
 		} catch (SQLException e) {
-			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<LibraryBranch>(libraryBranch, HttpStatus.OK);
@@ -74,7 +72,6 @@ public class LibrarianController {
 		try {
 			librarianService.updateLibraryBranch(libraryBranch);
 		} catch (SQLException e) {
-			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(HttpStatus.OK);
@@ -87,7 +84,6 @@ public class LibrarianController {
 		try {
 			books = librarianService.getBooks();
 		} catch (SQLException e) {
-			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<List<Book>>(books, HttpStatus.OK);
@@ -116,7 +112,6 @@ public class LibrarianController {
 		try {
 			bookCopy = librarianService.getBookCopyById(parsedBookId, parsedLibraryBranchId);
 		} catch (SQLException e) {
-			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<BookCopy>(bookCopy, HttpStatus.OK);
@@ -136,7 +131,6 @@ public class LibrarianController {
 		try {
 			librarianService.updateBookCopy(bookCopy);
 		} catch (SQLException e) {
-			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(HttpStatus.OK);
