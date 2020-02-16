@@ -18,7 +18,7 @@ public class AdminController {
 	@Autowired
 	AdminService adminService;
 	
-	@GetMapping(path = "/admin/books", produces = {
+	@GetMapping(path = "/administrator/books", produces = {
 			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<List<Book>> getBooks() {
 		List<Book> books = adminService.readBook();
