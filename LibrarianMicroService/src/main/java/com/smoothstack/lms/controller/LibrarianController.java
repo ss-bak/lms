@@ -36,7 +36,8 @@ public class LibrarianController {
 		return new ResponseEntity<List<LibraryBranch>>(libraryBranches, HttpStatus.OK);
 	}
 
-	@RequestMapping(path = "/lms/librarybranches/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = "/lms/librarybranches/{id}", method = RequestMethod.GET, produces = {
+			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<LibraryBranch> getLibraryBranchById(@PathVariable String id) {
 		Integer parsedId = null;
 		try {
@@ -89,7 +90,8 @@ public class LibrarianController {
 		return new ResponseEntity<List<Book>>(books, HttpStatus.OK);
 	}
 
-	@RequestMapping(path = "/lms/bookcopies/{bookId}/{libraryBranchId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = "/lms/bookcopies/{bookId}/{libraryBranchId}", method = RequestMethod.GET, produces = {
+			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<BookCopy> getBookCopy(@PathVariable String bookId, @PathVariable String libraryBranchId) {
 		Integer parsedBookId = null, parsedLibraryBranchId = null;
 		try {
