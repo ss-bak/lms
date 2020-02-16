@@ -59,6 +59,13 @@ public class AdminController {
 	@PostMapping(path = "administrator/book", consumes = {
 			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<Void> saveBook(@RequestBody Book book) {
+		if (book == null || book.getPublisher().getPublisherId() == null 
+				|| book.getTitle() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		if (book.getAuthors() == null || book.getAuthors().get(0).getAuthorId() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		try {
 			adminService.saveBook(book);
 			URI location = ServletUriComponentsBuilder
@@ -77,6 +84,13 @@ public class AdminController {
 	@PutMapping(path = "administrator/book/{id}", consumes = {
 			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<Void> updateBook(@RequestBody Book book, @PathVariable int id) {
+		if (book == null || book.getPublisher().getPublisherId() == null 
+				|| book.getTitle() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		if (book.getAuthors() == null || book.getAuthors().get(0).getAuthorId() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		book.setBookId(id);
 		try {
 			adminService.updateBook(book);
@@ -125,6 +139,9 @@ public class AdminController {
 	@PostMapping(path = "administrator/author", consumes = {
 			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<Void> saveAuthor(@RequestBody Author author) {
+		if (author == null || author.getAuthorName() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		try {
 			adminService.saveAuthor(author);
 			URI location = ServletUriComponentsBuilder
@@ -143,6 +160,9 @@ public class AdminController {
 	@PutMapping(path = "administrator/author/{id}", consumes = {
 			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<Void> updateAuthor(@RequestBody Author author, @PathVariable int id) {
+		if (author == null || author.getAuthorName() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		author.setAuthorId(id);
 		try {
 			adminService.updateAuthor(author);
@@ -191,6 +211,9 @@ public class AdminController {
 	@PostMapping(path = "administrator/genre", consumes = {
 			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<Void> saveGenre(@RequestBody Genre genre) {
+		if (genre == null || genre.getGenreName() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		try {
 			adminService.saveGenre(genre);
 			URI location = ServletUriComponentsBuilder
@@ -209,6 +232,9 @@ public class AdminController {
 	@PutMapping(path = "administrator/genre/{id}", consumes = {
 			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<Void> updateGenre(@RequestBody Genre genre, @PathVariable int id) {
+		if (genre == null || genre.getGenreName() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		genre.setGenreId(id);
 		try {
 			adminService.updateGenre(genre);
@@ -257,6 +283,10 @@ public class AdminController {
 	@PostMapping(path = "administrator/borrower", consumes = {
 			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<Void> saveBorrower(@RequestBody Borrower borrower) {
+		if (borrower == null || borrower.getAddress() == null 
+				|| borrower.getName() == null || borrower.getPhone() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		try {
 			adminService.saveBorrower(borrower);
 			URI location = ServletUriComponentsBuilder
@@ -275,6 +305,10 @@ public class AdminController {
 	@PutMapping(path = "administrator/borrower/{id}", consumes = {
 			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<Void> updateBorrower(@RequestBody Borrower borrower, @PathVariable int id) {
+		if (borrower == null || borrower.getAddress() == null 
+				|| borrower.getName() == null || borrower.getPhone() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		borrower.setCardNo(id);
 		try {
 			adminService.updateBorrower(borrower);
@@ -323,6 +357,9 @@ public class AdminController {
 	@PostMapping(path = "administrator/branch", consumes = {
 			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<Void> saveBranch(@RequestBody Branch branch) {
+		if (branch == null || branch.getBranchName() == null || branch.getBranchAddress() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		try {
 			adminService.saveBranch(branch);
 			URI location = ServletUriComponentsBuilder
@@ -341,6 +378,9 @@ public class AdminController {
 	@PutMapping(path = "administrator/branch/{id}", consumes = {
 			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<Void> updateBranch(@RequestBody Branch branch, @PathVariable int id) {
+		if (branch == null || branch.getBranchName() == null || branch.getBranchAddress() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		branch.setBranchId(id);
 		try {
 			adminService.updateBranch(branch);
@@ -389,11 +429,15 @@ public class AdminController {
 	@PostMapping(path = "administrator/copy", consumes = {
 			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<Void> saveCopies(@RequestBody Copies copies) {
+		if (copies.getBookId() == null 
+				|| copies.getBranchId() == null || copies.getNoOfCopies() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		try {
 			adminService.saveCopies(copies);
 			URI location = ServletUriComponentsBuilder
 					.fromCurrentRequest()
-					.path("/{branchId}/{bookId}")
+					.path("{/branchId}/{bookId}")
 					.buildAndExpand(copies.getBranchId(), copies.getBookId())
 					.toUri();
 			return ResponseEntity.created(location).build();
@@ -408,6 +452,9 @@ public class AdminController {
 			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<Void> updateCopies(
 			@RequestBody Copies copies, @PathVariable int branchId, @PathVariable int bookId) {
+		if (copies.getNoOfCopies() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		copies.setBranchId(branchId);
 		copies.setBookId(bookId);
 		try {
@@ -457,6 +504,10 @@ public class AdminController {
 	@PostMapping(path = "administrator/publisher", consumes = {
 			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<Void> savePublisher(@RequestBody Publisher publisher) {
+		if (publisher == null || publisher.getPublisherName() == null 
+				|| publisher.getPublisherAddress() == null || publisher.getPublisherPhone() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		try {
 			adminService.savePublisher(publisher);
 			URI location = ServletUriComponentsBuilder
@@ -475,6 +526,10 @@ public class AdminController {
 	@PutMapping(path = "administrator/publisher/{id}", consumes = {
 			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<Void> updatePublisher(@RequestBody Publisher publisher, @PathVariable int id) {
+		if (publisher == null || publisher.getPublisherName() == null 
+				|| publisher.getPublisherAddress() == null || publisher.getPublisherPhone() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		publisher.setPublisherId(id);
 		try {
 			adminService.updatePublisher(publisher);
