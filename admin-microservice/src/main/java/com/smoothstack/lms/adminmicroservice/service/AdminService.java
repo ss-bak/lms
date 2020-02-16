@@ -76,7 +76,7 @@ public class AdminService {
 		}
 	}
 	
-	public Author readauthorById(Integer authorId) throws ClassNotFoundException, SQLException {
+	public Author readAuthorById(Integer authorId) throws ClassNotFoundException, SQLException {
 		try {
 			AuthorDAO adao = new AuthorDAO();
 			return adao.readAuthorById(authorId);
@@ -331,6 +331,7 @@ public class AdminService {
 			copy.setBranchId(cdao.addCopies(copy));
 			cdao.commit();
 		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
 			System.out.println("Could not create copies");
 			throw e;
 		}
