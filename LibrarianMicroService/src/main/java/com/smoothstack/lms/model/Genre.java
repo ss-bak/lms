@@ -1,8 +1,13 @@
 package com.smoothstack.lms.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Genre {
+public class Genre implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String name;
 	private List<Book> books;
@@ -35,5 +40,5 @@ public class Genre {
 	public String toString() {
 		return "Genre [id=" + id + ", name=" + name + ", books=" + books + "]";
 	}
-	
+
 }

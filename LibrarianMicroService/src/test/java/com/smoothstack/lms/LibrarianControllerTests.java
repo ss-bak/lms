@@ -28,8 +28,8 @@ class LibrarianControllerTests {
 	}
 
 	@Test
-	void getLibraryBranchByNumberId() {
-		Assertions.assertEquals(HttpStatus.BAD_REQUEST, librarianController.getLibraryBranchById(0).getStatusCode());
+	void getLibraryBranchByInvalidId() {
+		Assertions.assertEquals(HttpStatus.NOT_FOUND, librarianController.getLibraryBranchById(0).getStatusCode());
 	}
 
 	@Test
@@ -38,7 +38,8 @@ class LibrarianControllerTests {
 		libraryBranch.setId(1);
 		libraryBranch.setName("TestName");
 		libraryBranch.setAddress("TestAddress");
-		Assertions.assertEquals(HttpStatus.OK, librarianController.updateLibraryBranch(libraryBranch).getStatusCode());
+		Assertions.assertEquals(HttpStatus.NO_CONTENT,
+				librarianController.updateLibraryBranch(libraryBranch).getStatusCode());
 	}
 
 	@Test
@@ -117,13 +118,13 @@ class LibrarianControllerTests {
 	}
 
 	@Test
-	void getBookCopyNumberBookId() {
-		Assertions.assertEquals(HttpStatus.BAD_REQUEST, librarianController.getBookCopy(0, 1).getStatusCode());
+	void getBookCopyInvalidBookId() {
+		Assertions.assertEquals(HttpStatus.NOT_FOUND, librarianController.getBookCopy(0, 1).getStatusCode());
 	}
 
 	@Test
-	void getBookCopyNumberLibraryBranchId() {
-		Assertions.assertEquals(HttpStatus.BAD_REQUEST, librarianController.getBookCopy(1, 0).getStatusCode());
+	void getBookCopyInvalidLibraryBranchId() {
+		Assertions.assertEquals(HttpStatus.NOT_FOUND, librarianController.getBookCopy(1, 0).getStatusCode());
 	}
 
 	@Test
@@ -136,7 +137,7 @@ class LibrarianControllerTests {
 		libraryBranch.setId(1);
 		bookCopy.setLibraryBranch(libraryBranch);
 		bookCopy.setAmount(777);
-		Assertions.assertEquals(HttpStatus.OK, librarianController.updateBookCopy(bookCopy).getStatusCode());
+		Assertions.assertEquals(HttpStatus.NO_CONTENT, librarianController.updateBookCopy(bookCopy).getStatusCode());
 		;
 	}
 

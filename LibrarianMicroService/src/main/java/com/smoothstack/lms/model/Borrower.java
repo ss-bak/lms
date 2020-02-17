@@ -1,8 +1,13 @@
 package com.smoothstack.lms.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Borrower {
+public class Borrower implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer cardNumber;
 	private String name;
 	private String address;
@@ -54,5 +59,5 @@ public class Borrower {
 		return "Borrower [cardNumber=" + cardNumber + ", name=" + name + ", address=" + address + ", phone=" + phone
 				+ ", books=" + books + "]";
 	}
-	
+
 }

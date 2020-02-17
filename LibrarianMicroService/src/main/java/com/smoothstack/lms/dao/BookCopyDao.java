@@ -21,14 +21,19 @@ public class BookCopyDao {
 	@Autowired
 	private LibraryBranchDao libraryBranchDao;
 
-	public void update(BookCopy bookCopy) throws SQLException {
-		jdbcTemplate.update("update tbl_book_copies set noOfCopies = ? where bookId = ? and branchId = ?",
-				new Object[] { bookCopy.getAmount(), bookCopy.getBook().getId(), bookCopy.getLibraryBranch().getId() });
+	public void create(BookCopy bookCopy) throws SQLException {
+		jdbcTemplate.update("insert into tbl_book_copies (bookId, branchId, noOfCopies) values(?, ?, ?)",
+				new Object[] { bookCopy.getBook().getId(), bookCopy.getLibraryBranch().getId(), bookCopy.getAmount() });
 	}
 
 	public BookCopy readOne(int bookId, int libraryBranchId) throws SQLException {
 		return jdbcTemplate.queryForObject("select * from tbl_book_copies where bookId = ? and branchId = ?",
 				new Object[] { bookId, libraryBranchId }, (rs, rowNum) -> extractData(rs));
+	}
+
+	public int update(BookCopy bookCopy) throws SQLException {
+		return jdbcTemplate.update("update tbl_book_copies set noOfCopies = ? where bookId = ? and branchId = ?",
+				new Object[] { bookCopy.getAmount(), bookCopy.getBook().getId(), bookCopy.getLibraryBranch().getId() });
 	}
 
 	public BookCopy extractData(ResultSet rs) throws SQLException {

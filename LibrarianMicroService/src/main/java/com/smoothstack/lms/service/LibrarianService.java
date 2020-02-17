@@ -33,8 +33,8 @@ public class LibrarianService {
 		return libraryBranchDao.readOne(id);
 	}
 
-	public void updateLibraryBranch(LibraryBranch libraryBranch) throws SQLException {
-		libraryBranchDao.update(libraryBranch);
+	public int updateLibraryBranch(LibraryBranch libraryBranch) throws SQLException {
+		return libraryBranchDao.update(libraryBranch);
 	}
 
 	public List<Book> getBooks() throws SQLException {
@@ -45,8 +45,12 @@ public class LibrarianService {
 		return bookCopyDao.readOne(bookId, libraryBranchId);
 	}
 
-	public void updateBookCopy(BookCopy bookCopy) throws SQLException {
-		bookCopyDao.update(bookCopy);
+	public void addBookCopy(BookCopy bookCopy) throws SQLException {
+		bookCopyDao.create(bookCopy);
+	}
+
+	public int updateBookCopy(BookCopy bookCopy) throws SQLException {
+		return bookCopyDao.update(bookCopy);
 	}
 
 }

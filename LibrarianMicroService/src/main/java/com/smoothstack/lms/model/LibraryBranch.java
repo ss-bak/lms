@@ -1,8 +1,13 @@
 package com.smoothstack.lms.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class LibraryBranch {
+public class LibraryBranch implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String name;
 	private String address;
@@ -54,5 +59,5 @@ public class LibraryBranch {
 		return "LibraryBranch [id=" + id + ", name=" + name + ", address=" + address + ", books=" + books
 				+ ", borrowers=" + borrowers + "]";
 	}
-	
+
 }
