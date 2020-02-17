@@ -24,22 +24,12 @@ class LibrarianControllerTests {
 
 	@Test
 	void getLibraryBranchByValidId() {
-		Assertions.assertEquals(HttpStatus.OK, librarianController.getLibraryBranchById("1").getStatusCode());
-	}
-
-	@Test
-	void getLibraryBranchByNullId() {
-		Assertions.assertEquals(HttpStatus.BAD_REQUEST, librarianController.getLibraryBranchById(null).getStatusCode());
-	}
-
-	@Test
-	void getLibraryBranchByLetterId() {
-		Assertions.assertEquals(HttpStatus.BAD_REQUEST, librarianController.getLibraryBranchById("a").getStatusCode());
+		Assertions.assertEquals(HttpStatus.OK, librarianController.getLibraryBranchById(1).getStatusCode());
 	}
 
 	@Test
 	void getLibraryBranchByNumberId() {
-		Assertions.assertEquals(HttpStatus.BAD_REQUEST, librarianController.getLibraryBranchById("0").getStatusCode());
+		Assertions.assertEquals(HttpStatus.BAD_REQUEST, librarianController.getLibraryBranchById(0).getStatusCode());
 	}
 
 	@Test
@@ -123,37 +113,17 @@ class LibrarianControllerTests {
 
 	@Test
 	void getBookCopy() {
-		Assertions.assertEquals(HttpStatus.OK, librarianController.getBookCopy("1", "1").getStatusCode());
-	}
-
-	@Test
-	void getBookCopyNullBookId() {
-		Assertions.assertEquals(HttpStatus.BAD_REQUEST, librarianController.getBookCopy(null, "1").getStatusCode());
-	}
-
-	@Test
-	void getBookCopyLetterBookId() {
-		Assertions.assertEquals(HttpStatus.BAD_REQUEST, librarianController.getBookCopy("a", "1").getStatusCode());
+		Assertions.assertEquals(HttpStatus.OK, librarianController.getBookCopy(1, 1).getStatusCode());
 	}
 
 	@Test
 	void getBookCopyNumberBookId() {
-		Assertions.assertEquals(HttpStatus.BAD_REQUEST, librarianController.getBookCopy("0", "1").getStatusCode());
-	}
-
-	@Test
-	void getBookCopyNullLibraryBranchId() {
-		Assertions.assertEquals(HttpStatus.BAD_REQUEST, librarianController.getBookCopy("1", null).getStatusCode());
-	}
-
-	@Test
-	void getBookCopyLetterLibraryBranchId() {
-		Assertions.assertEquals(HttpStatus.BAD_REQUEST, librarianController.getBookCopy("1", "a").getStatusCode());
+		Assertions.assertEquals(HttpStatus.BAD_REQUEST, librarianController.getBookCopy(0, 1).getStatusCode());
 	}
 
 	@Test
 	void getBookCopyNumberLibraryBranchId() {
-		Assertions.assertEquals(HttpStatus.BAD_REQUEST, librarianController.getBookCopy("1", "0").getStatusCode());
+		Assertions.assertEquals(HttpStatus.BAD_REQUEST, librarianController.getBookCopy(1, 0).getStatusCode());
 	}
 
 	@Test

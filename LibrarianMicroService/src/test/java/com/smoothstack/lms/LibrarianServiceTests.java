@@ -40,7 +40,7 @@ public class LibrarianServiceTests {
 	public void getLibraryBranchById() throws SQLException {
 		when(librarianService.getLibraryBranchById(anyInt())).thenThrow(SQLException.class);
 		Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,
-				librarianController.getLibraryBranchById("1").getStatusCode());
+				librarianController.getLibraryBranchById(1).getStatusCode());
 	}
 
 	@Test
@@ -64,7 +64,7 @@ public class LibrarianServiceTests {
 	public void getBookCopyById() throws SQLException {
 		when(librarianService.getBookCopyById(anyInt(), anyInt())).thenThrow(SQLException.class);
 		Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,
-				librarianController.getBookCopy("1", "1").getStatusCode());
+				librarianController.getBookCopy(1, 1).getStatusCode());
 	}
 
 	@Test
