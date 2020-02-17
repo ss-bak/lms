@@ -33,7 +33,7 @@ public class LibrarianController {
 		try {
 			List<LibraryBranch> libraryBranches = librarianService.getLibraryBranches();
 			if (libraryBranches.isEmpty()) {
-				ResponseEntity.notFound().build();
+				return ResponseEntity.notFound().build();
 			}
 			return ResponseEntity.ok(libraryBranches);
 		} catch (Exception e) {
@@ -81,7 +81,7 @@ public class LibrarianController {
 		try {
 			List<Book> books = librarianService.getBooks();
 			if (books.isEmpty()) {
-				ResponseEntity.notFound().build();
+				return ResponseEntity.notFound().build();
 			}
 			return ResponseEntity.ok(books);
 		} catch (Exception e) {
