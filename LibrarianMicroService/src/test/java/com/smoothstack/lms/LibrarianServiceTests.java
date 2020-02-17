@@ -6,6 +6,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -37,6 +38,12 @@ public class LibrarianServiceTests {
 	}
 
 	@Test
+	public void getLibraryBranchesEmpty() throws SQLException {
+		when(librarianService.getLibraryBranches()).thenReturn(new ArrayList<LibraryBranch>());
+		Assertions.assertEquals(HttpStatus.NOT_FOUND, librarianController.getLibraryBranches().getStatusCode());
+	}
+
+	@Test
 	public void getLibraryBranchById() throws SQLException {
 		when(librarianService.getLibraryBranchById(anyInt())).thenThrow(SQLException.class);
 		Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,
@@ -58,6 +65,27 @@ public class LibrarianServiceTests {
 	public void getBooks() throws SQLException {
 		when(librarianService.getBooks()).thenThrow(SQLException.class);
 		Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, librarianController.getBooks().getStatusCode());
+	}
+
+	@Test
+	public void getBooksEmpty() throws SQLException {
+		when(librarianService.getBooks()).thenReturn(new ArrayList<Book>());
+		Assertions.assertEquals(HttpStatus.NOT_FOUND, librarianController.getBooks().getStatusCode());
+	}
+
+	@Test
+	public void addBookCopy() throws SQLException {
+		BookCopy bookCopy = new BookCopy();
+		Book book = new Book();
+		book.setId(1);
+		bookCopy.setBook(book);
+		LibraryBranch libraryBranch = new LibraryBranch();
+		libraryBranch.setId(1);
+		bookCopy.setLibraryBranch(libraryBranch);
+		bookCopy.setAmount(1);
+		doThrow(SQLException.class).when(librarianService).addBookCopy(any());
+		Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,
+				librarianController.addBookCopy(bookCopy).getStatusCode());
 	}
 
 	@Test

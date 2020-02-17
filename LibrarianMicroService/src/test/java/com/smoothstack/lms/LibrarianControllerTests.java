@@ -112,6 +112,137 @@ class LibrarianControllerTests {
 		Assertions.assertEquals(HttpStatus.OK, librarianController.getBooks().getStatusCode());
 	}
 
+//	@Test
+//	void addBookCopy() {
+//		BookCopy bookCopy = new BookCopy();
+//		Book book = new Book();
+//		book.setId(6);
+//		bookCopy.setBook(book);
+//		LibraryBranch libraryBranch = new LibraryBranch();
+//		libraryBranch.setId(2);
+//		bookCopy.setLibraryBranch(libraryBranch);
+//		bookCopy.setAmount(777);
+//		Assertions.assertEquals(HttpStatus.CREATED, librarianController.addBookCopy(bookCopy).getStatusCode());
+//	}
+
+	@Test
+	void addBookCopyNull() {
+		Assertions.assertEquals(HttpStatus.BAD_REQUEST, librarianController.addBookCopy(null).getStatusCode());
+	}
+
+	@Test
+	void addBookCopyNullBook() {
+		BookCopy bookCopy = new BookCopy();
+		bookCopy.setBook(null);
+		LibraryBranch libraryBranch = new LibraryBranch();
+		libraryBranch.setId(1);
+		bookCopy.setLibraryBranch(libraryBranch);
+		bookCopy.setAmount(777);
+		Assertions.assertEquals(HttpStatus.BAD_REQUEST, librarianController.addBookCopy(bookCopy).getStatusCode());
+	}
+
+	@Test
+	void addBookCopyNullBookId() {
+		BookCopy bookCopy = new BookCopy();
+		Book book = new Book();
+		book.setId(null);
+		bookCopy.setBook(book);
+		LibraryBranch libraryBranch = new LibraryBranch();
+		libraryBranch.setId(1);
+		bookCopy.setLibraryBranch(libraryBranch);
+		bookCopy.setAmount(777);
+		Assertions.assertEquals(HttpStatus.BAD_REQUEST, librarianController.addBookCopy(bookCopy).getStatusCode());
+	}
+
+	@Test
+	void addBookCopyInvalidBookId() {
+		BookCopy bookCopy = new BookCopy();
+		Book book = new Book();
+		book.setId(0);
+		bookCopy.setBook(book);
+		LibraryBranch libraryBranch = new LibraryBranch();
+		libraryBranch.setId(1);
+		bookCopy.setLibraryBranch(libraryBranch);
+		bookCopy.setAmount(777);
+		Assertions.assertEquals(HttpStatus.BAD_REQUEST, librarianController.addBookCopy(bookCopy).getStatusCode());
+	}
+
+	@Test
+	void addBookCopyNullLibraryBranch() {
+		BookCopy bookCopy = new BookCopy();
+		Book book = new Book();
+		book.setId(1);
+		bookCopy.setBook(book);
+		bookCopy.setLibraryBranch(null);
+		bookCopy.setAmount(777);
+		Assertions.assertEquals(HttpStatus.BAD_REQUEST, librarianController.addBookCopy(bookCopy).getStatusCode());
+	}
+
+	@Test
+	void addBookCopyNullLibraryBranchId() {
+		BookCopy bookCopy = new BookCopy();
+		Book book = new Book();
+		book.setId(1);
+		bookCopy.setBook(book);
+		LibraryBranch libraryBranch = new LibraryBranch();
+		libraryBranch.setId(null);
+		bookCopy.setLibraryBranch(libraryBranch);
+		bookCopy.setAmount(777);
+		Assertions.assertEquals(HttpStatus.BAD_REQUEST, librarianController.addBookCopy(bookCopy).getStatusCode());
+	}
+
+	@Test
+	void addBookCopyInvalidLibraryBranchId() {
+		BookCopy bookCopy = new BookCopy();
+		Book book = new Book();
+		book.setId(1);
+		bookCopy.setBook(book);
+		LibraryBranch libraryBranch = new LibraryBranch();
+		libraryBranch.setId(0);
+		bookCopy.setLibraryBranch(libraryBranch);
+		bookCopy.setAmount(777);
+		Assertions.assertEquals(HttpStatus.BAD_REQUEST, librarianController.addBookCopy(bookCopy).getStatusCode());
+	}
+
+	@Test
+	void addBookCopyNullAmount() {
+		BookCopy bookCopy = new BookCopy();
+		Book book = new Book();
+		book.setId(1);
+		bookCopy.setBook(book);
+		LibraryBranch libraryBranch = new LibraryBranch();
+		libraryBranch.setId(1);
+		bookCopy.setLibraryBranch(libraryBranch);
+		bookCopy.setAmount(null);
+		Assertions.assertEquals(HttpStatus.BAD_REQUEST, librarianController.addBookCopy(bookCopy).getStatusCode());
+	}
+
+	@Test
+	void addBookCopyNegativeAmount() {
+		BookCopy bookCopy = new BookCopy();
+		Book book = new Book();
+		book.setId(1);
+		bookCopy.setBook(book);
+		LibraryBranch libraryBranch = new LibraryBranch();
+		libraryBranch.setId(1);
+		bookCopy.setLibraryBranch(libraryBranch);
+		bookCopy.setAmount(-1);
+		Assertions.assertEquals(HttpStatus.BAD_REQUEST, librarianController.addBookCopy(bookCopy).getStatusCode());
+	}
+
+	@Test
+	void addBookCopyDuplicate() {
+		BookCopy bookCopy = new BookCopy();
+		Book book = new Book();
+		book.setId(1);
+		bookCopy.setBook(book);
+		LibraryBranch libraryBranch = new LibraryBranch();
+		libraryBranch.setId(1);
+		bookCopy.setLibraryBranch(libraryBranch);
+		bookCopy.setAmount(777);
+		Assertions.assertEquals(HttpStatus.BAD_REQUEST, librarianController.addBookCopy(bookCopy).getStatusCode());
+	}
+
 	@Test
 	void getBookCopy() {
 		Assertions.assertEquals(HttpStatus.OK, librarianController.getBookCopy(1, 1).getStatusCode());
@@ -138,7 +269,6 @@ class LibrarianControllerTests {
 		bookCopy.setLibraryBranch(libraryBranch);
 		bookCopy.setAmount(777);
 		Assertions.assertEquals(HttpStatus.NO_CONTENT, librarianController.updateBookCopy(bookCopy).getStatusCode());
-		;
 	}
 
 	@Test
@@ -171,10 +301,10 @@ class LibrarianControllerTests {
 	}
 
 	@Test
-	void updateBookCopyNegativeBookId() {
+	void updateBookCopyInvalidBookId() {
 		BookCopy bookCopy = new BookCopy();
 		Book book = new Book();
-		book.setId(-1);
+		book.setId(0);
 		bookCopy.setBook(book);
 		LibraryBranch libraryBranch = new LibraryBranch();
 		libraryBranch.setId(1);
@@ -210,13 +340,13 @@ class LibrarianControllerTests {
 	}
 
 	@Test
-	void updateBookCopyNegativeLibraryBranchId() {
+	void updateBookCopyInvalidLibraryBranchId() {
 		BookCopy bookCopy = new BookCopy();
 		Book book = new Book();
 		book.setId(1);
 		bookCopy.setBook(book);
 		LibraryBranch libraryBranch = new LibraryBranch();
-		libraryBranch.setId(-1);
+		libraryBranch.setId(0);
 		bookCopy.setLibraryBranch(libraryBranch);
 		bookCopy.setAmount(777);
 		Assertions.assertEquals(HttpStatus.BAD_REQUEST, librarianController.updateBookCopy(bookCopy).getStatusCode());
@@ -247,4 +377,5 @@ class LibrarianControllerTests {
 		bookCopy.setAmount(-1);
 		Assertions.assertEquals(HttpStatus.BAD_REQUEST, librarianController.updateBookCopy(bookCopy).getStatusCode());
 	}
+
 }

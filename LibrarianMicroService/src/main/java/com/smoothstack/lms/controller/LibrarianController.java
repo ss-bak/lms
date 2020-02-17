@@ -1,6 +1,10 @@
 package com.smoothstack.lms.controller;
 
+import java.net.URI;
 import java.util.List;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -8,12 +12,12 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.smoothstack.lms.model.Book;
@@ -27,8 +31,8 @@ public class LibrarianController {
 	@Autowired
 	private LibrarianService librarianService;
 
-	@RequestMapping(path = "/librarian/librarybranches", method = RequestMethod.GET, produces = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	@GetMapping(path = "/librarian/librarybranches")
+	@Produces({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<List<LibraryBranch>> getLibraryBranches() {
 		try {
 			List<LibraryBranch> libraryBranches = librarianService.getLibraryBranches();
@@ -41,8 +45,8 @@ public class LibrarianController {
 		}
 	}
 
-	@RequestMapping(path = "/librarian/librarybranches/{id}", method = RequestMethod.GET, produces = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	@GetMapping(path = "/librarian/librarybranches/{id}")
+	@Produces({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<LibraryBranch> getLibraryBranchById(@PathVariable int id) {
 		try {
 			LibraryBranch libraryBranch = librarianService.getLibraryBranchById(id);
@@ -54,8 +58,8 @@ public class LibrarianController {
 		}
 	}
 
-	@RequestMapping(path = "/librarian/librarybranches", method = RequestMethod.PUT, consumes = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	@PutMapping(path = "/librarian/librarybranches")
+	@Consumes({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> updateLibraryBranch(@RequestBody LibraryBranch libraryBranch) {
 		try {
 			if (libraryBranch == null || libraryBranch.getId() == null || libraryBranch.getName() == null
@@ -75,8 +79,8 @@ public class LibrarianController {
 		}
 	}
 
-	@RequestMapping(path = "/librarian/books", method = RequestMethod.GET, produces = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	@GetMapping(path = "/librarian/books")
+	@Produces({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<List<Book>> getBooks() {
 		try {
 			List<Book> books = librarianService.getBooks();
@@ -89,8 +93,8 @@ public class LibrarianController {
 		}
 	}
 
-	@RequestMapping(path = "/librarian/bookcopies/{bookId}/{libraryBranchId}", method = RequestMethod.GET, produces = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	@GetMapping(path = "/librarian/bookcopies/{bookId}/{libraryBranchId}")
+	@Produces({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<BookCopy> getBookCopy(@PathVariable int bookId, @PathVariable int libraryBranchId) {
 		try {
 			BookCopy bookCopy = librarianService.getBookCopyById(bookId, libraryBranchId);
@@ -102,9 +106,9 @@ public class LibrarianController {
 		}
 	}
 
-	@RequestMapping(path = "/librarian/bookcopies", method = RequestMethod.POST, consumes = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-	public ResponseEntity<Void> addBookCopy(@RequestBody BookCopy bookCopy, UriComponentsBuilder b) {
+	@PostMapping(path = "/librarian/bookcopies")
+	@Consumes({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	public ResponseEntity<Void> addBookCopy(@RequestBody BookCopy bookCopy) {
 		try {
 			if (bookCopy == null)
 				return ResponseEntity.badRequest().build();
@@ -115,9 +119,9 @@ public class LibrarianController {
 			if (bookCopy.getAmount() == null || bookCopy.getAmount() < 0)
 				return ResponseEntity.badRequest().build();
 			librarianService.addBookCopy(bookCopy);
-			UriComponents uriComponents = b.path("/librarian/bookcopies/{bookId}/{libraryBranchId}")
-					.buildAndExpand(bookCopy.getBook().getId(), bookCopy.getLibraryBranch().getId());
-			return ResponseEntity.created(uriComponents.toUri()).build();
+			URI uri = UriComponentsBuilder.fromUriString("/librarian/bookcopies/{bookId}/{libraryBranchId}")
+					.buildAndExpand(bookCopy.getBook().getId(), bookCopy.getLibraryBranch().getId()).toUri();
+			return ResponseEntity.created(uri).build();
 		} catch (DataIntegrityViolationException e) {
 			return ResponseEntity.badRequest().build();
 		} catch (Exception e) {
@@ -125,8 +129,8 @@ public class LibrarianController {
 		}
 	}
 
-	@RequestMapping(path = "/librarian/bookcopies", method = RequestMethod.PUT, consumes = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	@PutMapping(path = "/librarian/bookcopies")
+	@Consumes({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> updateBookCopy(@RequestBody BookCopy bookCopy) {
 		try {
 			if (bookCopy == null)
