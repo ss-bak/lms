@@ -65,8 +65,6 @@ public class LibrarianController {
 				return ResponseEntity.badRequest().build();
 			if (libraryBranch.getAddress().trim().isEmpty())
 				return ResponseEntity.badRequest().build();
-			libraryBranch.setName(libraryBranch.getName().trim());
-			libraryBranch.setAddress(libraryBranch.getAddress().trim());
 			int rowsAffected = librarianService.updateLibraryBranch(libraryBranch);
 			if (rowsAffected == 0) {
 				return ResponseEntity.badRequest().build();

@@ -42,7 +42,8 @@ public class LibraryBranchDao {
 
 	public int update(LibraryBranch libraryBranch) throws SQLException {
 		return jdbcTemplate.update("update tbl_library_branch set branchName = ?, branchAddress = ? where branchId = ?",
-				new Object[] { libraryBranch.getName(), libraryBranch.getAddress(), libraryBranch.getId() });
+				new Object[] { libraryBranch.getName().trim(), libraryBranch.getAddress().trim(),
+						libraryBranch.getId() });
 	}
 
 	private LibraryBranch extractData(ResultSet rs) throws SQLException {
