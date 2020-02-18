@@ -46,7 +46,7 @@ public class AdminController {
 		}
 	}
 
-	@GetMapping(path = "/administrator/book/{id}")
+	@GetMapping(path = "/administrator/books/{id}")
 	@Produces({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Book> getBook(@PathVariable int id) {
 		try {
@@ -59,7 +59,7 @@ public class AdminController {
 		}
 	}
 
-	@PostMapping(path = "administrator/book")
+	@PostMapping(path = "administrator/books")
 	@Consumes({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> saveBook(@RequestBody Book book) {
 		if (book == null || book.getPublisher().getPublisherId() == null || book.getTitle() == null) {
@@ -80,7 +80,7 @@ public class AdminController {
 		}
 	}
 
-	@PutMapping(path = "administrator/book/{id}")
+	@PutMapping(path = "administrator/books/{id}")
 	@Consumes({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> updateBook(@RequestBody Book book, @PathVariable int id) {
 		if (book == null || book.getPublisher().getPublisherId() == null || book.getTitle() == null) {
@@ -98,7 +98,7 @@ public class AdminController {
 		}
 	}
 
-	@DeleteMapping(path = "administrator/book/{id}")
+	@DeleteMapping(path = "administrator/books/{id}")
 	public ResponseEntity<Void> deleteBook(@PathVariable int id) {
 		try {
 			adminService.deleteBook(adminService.readBookById(id));
@@ -121,7 +121,7 @@ public class AdminController {
 		}
 	}
 
-	@GetMapping(path = "/administrator/author/{id}")
+	@GetMapping(path = "/administrator/authors/{id}")
 	@Produces({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Author> getAuthor(@PathVariable int id) {
 		try {
@@ -134,7 +134,7 @@ public class AdminController {
 		}
 	}
 
-	@PostMapping(path = "administrator/author")
+	@PostMapping(path = "administrator/authors")
 	@Consumes({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> saveAuthor(@RequestBody Author author) {
 		if (author == null || author.getAuthorName() == null) {
@@ -152,7 +152,7 @@ public class AdminController {
 		}
 	}
 
-	@PutMapping(path = "administrator/author/{id}")
+	@PutMapping(path = "administrator/authors/{id}")
 	@Consumes({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> updateAuthor(@RequestBody Author author, @PathVariable int id) {
 		if (author == null || author.getAuthorName() == null) {
@@ -167,7 +167,7 @@ public class AdminController {
 		}
 	}
 
-	@DeleteMapping(path = "administrator/author/{id}")
+	@DeleteMapping(path = "administrator/authors/{id}")
 	public ResponseEntity<Void> deleteAuthor(@PathVariable int id) {
 		try {
 			adminService.deleteAuthor(adminService.readAuthorById(id));
@@ -190,7 +190,7 @@ public class AdminController {
 		}
 	}
 
-	@GetMapping(path = "/administrator/genre/{id}")
+	@GetMapping(path = "/administrator/genres/{id}")
 	@Produces({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Genre> getGenre(@PathVariable int id) {
 		try {
@@ -203,7 +203,7 @@ public class AdminController {
 		}
 	}
 
-	@PostMapping(path = "administrator/genre")
+	@PostMapping(path = "administrator/genres")
 	@Consumes({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> saveGenre(@RequestBody Genre genre) {
 		if (genre == null || genre.getGenreName() == null) {
@@ -221,7 +221,7 @@ public class AdminController {
 		}
 	}
 
-	@PutMapping(path = "administrator/genre/{id}")
+	@PutMapping(path = "administrator/genres/{id}")
 	@Consumes({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> updateGenre(@RequestBody Genre genre, @PathVariable int id) {
 		if (genre == null || genre.getGenreName() == null) {
@@ -236,7 +236,7 @@ public class AdminController {
 		}
 	}
 
-	@DeleteMapping(path = "administrator/genre/{id}")
+	@DeleteMapping(path = "administrator/genres/{id}")
 	public ResponseEntity<Void> deleteGenre(@PathVariable int id) {
 		try {
 			adminService.deleteGenre(adminService.readGenreById(id));
@@ -259,7 +259,7 @@ public class AdminController {
 		}
 	}
 
-	@GetMapping(path = "/administrator/borrower/{id}")
+	@GetMapping(path = "/administrator/borrowers/{id}")
 	@Produces({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Borrower> getBorrower(@PathVariable int id) {
 		try {
@@ -272,7 +272,7 @@ public class AdminController {
 		}
 	}
 
-	@PostMapping(path = "administrator/borrower")
+	@PostMapping(path = "administrator/borrowers")
 	@Consumes({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> saveBorrower(@RequestBody Borrower borrower) {
 		if (borrower == null || borrower.getAddress() == null || borrower.getName() == null
@@ -291,7 +291,7 @@ public class AdminController {
 		}
 	}
 
-	@PutMapping(path = "administrator/borrower/{id}")
+	@PutMapping(path = "administrator/borrowers/{id}")
 	@Consumes({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> updateBorrower(@RequestBody Borrower borrower, @PathVariable int id) {
 		if (borrower == null || borrower.getAddress() == null || borrower.getName() == null
@@ -307,7 +307,7 @@ public class AdminController {
 		}
 	}
 
-	@DeleteMapping(path = "administrator/borrower/{id}")
+	@DeleteMapping(path = "administrator/borrowers/{id}")
 	public ResponseEntity<Void> deleteBorrower(@PathVariable int id) {
 		try {
 			adminService.deleteBorrower(adminService.readBorrowerById(id));
@@ -319,7 +319,7 @@ public class AdminController {
 		}
 	}
 
-	@GetMapping(path = "/administrator/branchs")
+	@GetMapping(path = "/administrator/branches")
 	@Produces({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<List<Branch>> getBranchs() {
 		try {
@@ -330,7 +330,7 @@ public class AdminController {
 		}
 	}
 
-	@GetMapping(path = "/administrator/branch/{id}")
+	@GetMapping(path = "/administrator/branches/{id}")
 	@Produces({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Branch> getBranch(@PathVariable int id) {
 		try {
@@ -343,7 +343,7 @@ public class AdminController {
 		}
 	}
 
-	@PostMapping(path = "administrator/branch")
+	@PostMapping(path = "administrator/branches")
 	@Consumes({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> saveBranch(@RequestBody Branch branch) {
 		if (branch == null || branch.getBranchName() == null || branch.getBranchAddress() == null) {
@@ -361,7 +361,7 @@ public class AdminController {
 		}
 	}
 
-	@PutMapping(path = "administrator/branch/{id}")
+	@PutMapping(path = "administrator/branches/{id}")
 	@Consumes({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> updateBranch(@RequestBody Branch branch, @PathVariable int id) {
 		if (branch == null || branch.getBranchName() == null || branch.getBranchAddress() == null) {
@@ -376,7 +376,7 @@ public class AdminController {
 		}
 	}
 
-	@DeleteMapping(path = "administrator/branch/{id}")
+	@DeleteMapping(path = "administrator/branches/{id}")
 	public ResponseEntity<Void> deleteBranch(@PathVariable int id) {
 		try {
 			adminService.deleteBranch(adminService.readBranchById(id));
@@ -399,7 +399,7 @@ public class AdminController {
 		}
 	}
 
-	@GetMapping(path = "/administrator/copy/{branchId}/{bookId}")
+	@GetMapping(path = "/administrator/copies/{branchId}/{bookId}")
 	@Produces({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Copies> getCopy(@PathVariable int branchId, @PathVariable int bookId) {
 		try {
@@ -412,7 +412,7 @@ public class AdminController {
 		}
 	}
 
-	@PostMapping(path = "administrator/copy")
+	@PostMapping(path = "administrator/copies")
 	@Consumes({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> saveCopies(@RequestBody Copies copies) {
 		if (copies.getBookId() == null || copies.getBranchId() == null || copies.getNoOfCopies() == null) {
@@ -430,7 +430,7 @@ public class AdminController {
 		}
 	}
 
-	@PutMapping(path = "administrator/copy/{branchId}/{bookId}")
+	@PutMapping(path = "administrator/copies/{branchId}/{bookId}")
 	@Consumes({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> updateCopies(@RequestBody Copies copies, @PathVariable int branchId,
 			@PathVariable int bookId) {
@@ -447,7 +447,7 @@ public class AdminController {
 		}
 	}
 
-	@DeleteMapping(path = "administrator/copy/{brancId}/{bookId}")
+	@DeleteMapping(path = "administrator/copies/{brancId}/{bookId}")
 	public ResponseEntity<Void> deleteCopies(@PathVariable int branchId, @PathVariable int bookId) {
 		try {
 			adminService.deleteCopies(adminService.readCopyById(branchId, bookId));
@@ -470,7 +470,7 @@ public class AdminController {
 		}
 	}
 
-	@GetMapping(path = "/administrator/publisher/{id}")
+	@GetMapping(path = "/administrator/publishers/{id}")
 	@Produces({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Publisher> getPublisher(@PathVariable int id) {
 		try {
@@ -483,7 +483,7 @@ public class AdminController {
 		}
 	}
 
-	@PostMapping(path = "administrator/publisher")
+	@PostMapping(path = "administrator/publishers")
 	@Consumes({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> savePublisher(@RequestBody Publisher publisher) {
 		if (publisher == null || publisher.getPublisherName() == null || publisher.getPublisherAddress() == null
@@ -502,7 +502,7 @@ public class AdminController {
 		}
 	}
 
-	@PutMapping(path = "administrator/publisher/{id}")
+	@PutMapping(path = "administrator/publishers/{id}")
 	@Consumes({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> updatePublisher(@RequestBody Publisher publisher, @PathVariable int id) {
 		if (publisher == null || publisher.getPublisherName() == null || publisher.getPublisherAddress() == null
@@ -518,7 +518,7 @@ public class AdminController {
 		}
 	}
 
-	@DeleteMapping(path = "administrator/publisher/{id}")
+	@DeleteMapping(path = "administrator/publishers/{id}")
 	public ResponseEntity<Void> deletePublisher(@PathVariable int id) {
 		try {
 			adminService.deletePublisher(adminService.readPublisherById(id));
