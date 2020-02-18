@@ -5,14 +5,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 
 import com.smoothstack.lms.adminmicroservice.model.Author;
 import com.smoothstack.lms.adminmicroservice.model.Book;
 
 @Component
-@DependsOn("getConnection")
 public class AuthorDAO extends BaseDAO<Author> {
 
 	public AuthorDAO() throws ClassNotFoundException, SQLException {

@@ -28,4 +28,10 @@ public class Copies {
 	public void setNoOfCopies(Integer noOfCopies) {
 		this.noOfCopies = noOfCopies;
 	}
+
+	@Override
+	public String toString() {
+		return "Copies [bookId=" + bookId + ", branchId=" + branchId + ", noOfCopies=" + noOfCopies + "]";
+	}
+	
 }

@@ -28,4 +28,10 @@ public class Branch {
 	public void setBranchAddress(String branchAddress) {
 		this.branchAddress = branchAddress;
 	}
+
+	@Override
+	public String toString() {
+		return "Branch [branchId=" + branchId + ", branchName=" + branchName + ", branchAddress=" + branchAddress + "]";
+	}
+	
 }

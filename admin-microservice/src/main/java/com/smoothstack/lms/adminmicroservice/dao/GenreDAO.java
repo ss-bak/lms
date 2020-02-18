@@ -22,7 +22,7 @@ public class GenreDAO extends BaseDAO<Genre> {
 	}
 
 	public void updateGenre(Genre genre) throws SQLException, ClassNotFoundException {
-		save("update tbl_genre set genre_name where genre_id = ?",
+		save("update tbl_genre set genre_name = ? where genre_id = ?",
 				new Object[] { genre.getGenreName(), genre.getGenreId() });
 	}
 

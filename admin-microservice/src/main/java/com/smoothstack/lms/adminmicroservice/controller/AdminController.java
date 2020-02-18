@@ -28,39 +28,38 @@ import com.smoothstack.lms.adminmicroservice.service.AdminService;
 
 @RestController
 public class AdminController {
-	
+
 	@Autowired
 	AdminService adminService;
-	
-	@GetMapping(path = "/administrator/books", produces = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+
+	@GetMapping(path = "/administrator/books", produces = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<List<Book>> getBooks() {
 		try {
 			List<Book> books = adminService.readBook();
-			return new ResponseEntity<List<Book>>(books,  HttpStatus.OK);
+			return new ResponseEntity<List<Book>>(books, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	@GetMapping(path = "/administrator/book/{id}", produces = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+
+	@GetMapping(path = "/administrator/book/{id}", produces = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Book> getBook(@PathVariable int id) {
 		try {
 			Book book = adminService.readBookById(id);
-			return new ResponseEntity<Book>(book,  HttpStatus.OK);
+			return new ResponseEntity<Book>(book, HttpStatus.OK);
 		} catch (IndexOutOfBoundsException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	@PostMapping(path = "administrator/book", consumes = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+
+	@PostMapping(path = "administrator/book", consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> saveBook(@RequestBody Book book) {
-		if (book == null || book.getPublisher().getPublisherId() == null 
-				|| book.getTitle() == null) {
+		if (book == null || book.getPublisher().getPublisherId() == null || book.getTitle() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		if (book.getAuthors() == null || book.getAuthors().get(0).getAuthorId() == null) {
@@ -68,11 +67,8 @@ public class AdminController {
 		}
 		try {
 			adminService.saveBook(book);
-			URI location = ServletUriComponentsBuilder
-					.fromCurrentRequest()
-					.path("/{id}")
-					.buildAndExpand(book.getBookId())
-					.toUri();
+			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+					.buildAndExpand(book.getBookId()).toUri();
 			return ResponseEntity.created(location).build();
 		} catch (SQLException e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -80,12 +76,11 @@ public class AdminController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	@PutMapping(path = "administrator/book/{id}", consumes = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+
+	@PutMapping(path = "administrator/book/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> updateBook(@RequestBody Book book, @PathVariable int id) {
-		if (book == null || book.getPublisher().getPublisherId() == null 
-				|| book.getTitle() == null) {
+		if (book == null || book.getPublisher().getPublisherId() == null || book.getTitle() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		if (book.getAuthors() == null || book.getAuthors().get(0).getAuthorId() == null) {
@@ -99,7 +94,7 @@ public class AdminController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	@DeleteMapping(path = "administrator/book/{id}")
 	public ResponseEntity<Void> deleteBook(@PathVariable int id) {
 		try {
@@ -111,44 +106,41 @@ public class AdminController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	@GetMapping(path = "/administrator/authors", produces = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+
+	@GetMapping(path = "/administrator/authors", produces = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<List<Author>> getAuthors() {
 		try {
 			List<Author> authors = adminService.readAuthor();
-			return new ResponseEntity<List<Author>>(authors,  HttpStatus.OK);
+			return new ResponseEntity<List<Author>>(authors, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	@GetMapping(path = "/administrator/author/{id}", produces = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+
+	@GetMapping(path = "/administrator/author/{id}", produces = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Author> getAuthor(@PathVariable int id) {
 		try {
 			Author author = adminService.readAuthorById(id);
-			return new ResponseEntity<Author>(author,  HttpStatus.OK);
+			return new ResponseEntity<Author>(author, HttpStatus.OK);
 		} catch (IndexOutOfBoundsException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	@PostMapping(path = "administrator/author", consumes = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+
+	@PostMapping(path = "administrator/author", consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> saveAuthor(@RequestBody Author author) {
 		if (author == null || author.getAuthorName() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		try {
 			adminService.saveAuthor(author);
-			URI location = ServletUriComponentsBuilder
-					.fromCurrentRequest()
-					.path("/{id}")
-					.buildAndExpand(author.getAuthorId())
-					.toUri();
+			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+					.buildAndExpand(author.getAuthorId()).toUri();
 			return ResponseEntity.created(location).build();
 		} catch (SQLException e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -156,9 +148,9 @@ public class AdminController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	@PutMapping(path = "administrator/author/{id}", consumes = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+
+	@PutMapping(path = "administrator/author/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> updateAuthor(@RequestBody Author author, @PathVariable int id) {
 		if (author == null || author.getAuthorName() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -171,7 +163,7 @@ public class AdminController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	@DeleteMapping(path = "administrator/author/{id}")
 	public ResponseEntity<Void> deleteAuthor(@PathVariable int id) {
 		try {
@@ -183,44 +175,41 @@ public class AdminController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	@GetMapping(path = "/administrator/genres", produces = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+
+	@GetMapping(path = "/administrator/genres", produces = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<List<Genre>> getGenres() {
 		try {
 			List<Genre> genres = adminService.readGenre();
-			return new ResponseEntity<List<Genre>>(genres,  HttpStatus.OK);
+			return new ResponseEntity<List<Genre>>(genres, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	@GetMapping(path = "/administrator/genre/{id}", produces = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+
+	@GetMapping(path = "/administrator/genre/{id}", produces = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Genre> getGenre(@PathVariable int id) {
 		try {
 			Genre genre = adminService.readGenreById(id);
-			return new ResponseEntity<Genre>(genre,  HttpStatus.OK);
+			return new ResponseEntity<Genre>(genre, HttpStatus.OK);
 		} catch (IndexOutOfBoundsException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	@PostMapping(path = "administrator/genre", consumes = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+
+	@PostMapping(path = "administrator/genre", consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> saveGenre(@RequestBody Genre genre) {
 		if (genre == null || genre.getGenreName() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		try {
 			adminService.saveGenre(genre);
-			URI location = ServletUriComponentsBuilder
-					.fromCurrentRequest()
-					.path("/{id}")
-					.buildAndExpand(genre.getGenreId())
-					.toUri();
+			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+					.buildAndExpand(genre.getGenreId()).toUri();
 			return ResponseEntity.created(location).build();
 		} catch (SQLException e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -228,9 +217,9 @@ public class AdminController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	@PutMapping(path = "administrator/genre/{id}", consumes = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+
+	@PutMapping(path = "administrator/genre/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> updateGenre(@RequestBody Genre genre, @PathVariable int id) {
 		if (genre == null || genre.getGenreName() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -243,7 +232,7 @@ public class AdminController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	@DeleteMapping(path = "administrator/genre/{id}")
 	public ResponseEntity<Void> deleteGenre(@PathVariable int id) {
 		try {
@@ -255,45 +244,42 @@ public class AdminController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	@GetMapping(path = "/administrator/borrowers", produces = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+
+	@GetMapping(path = "/administrator/borrowers", produces = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<List<Borrower>> getBorrowers() {
 		try {
 			List<Borrower> borrowers = adminService.readBorrower();
-			return new ResponseEntity<List<Borrower>>(borrowers,  HttpStatus.OK);
+			return new ResponseEntity<List<Borrower>>(borrowers, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	@GetMapping(path = "/administrator/borrower/{id}", produces = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+
+	@GetMapping(path = "/administrator/borrower/{id}", produces = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Borrower> getBorrower(@PathVariable int id) {
 		try {
 			Borrower borrower = adminService.readBorrowerById(id);
-			return new ResponseEntity<Borrower>(borrower,  HttpStatus.OK);
+			return new ResponseEntity<Borrower>(borrower, HttpStatus.OK);
 		} catch (IndexOutOfBoundsException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	@PostMapping(path = "administrator/borrower", consumes = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+
+	@PostMapping(path = "administrator/borrower", consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> saveBorrower(@RequestBody Borrower borrower) {
-		if (borrower == null || borrower.getAddress() == null 
-				|| borrower.getName() == null || borrower.getPhone() == null) {
+		if (borrower == null || borrower.getAddress() == null || borrower.getName() == null
+				|| borrower.getPhone() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		try {
 			adminService.saveBorrower(borrower);
-			URI location = ServletUriComponentsBuilder
-					.fromCurrentRequest()
-					.path("/{id}")
-					.buildAndExpand(borrower.getCardNo())
-					.toUri();
+			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+					.buildAndExpand(borrower.getCardNo()).toUri();
 			return ResponseEntity.created(location).build();
 		} catch (SQLException e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -301,12 +287,12 @@ public class AdminController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	@PutMapping(path = "administrator/borrower/{id}", consumes = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+
+	@PutMapping(path = "administrator/borrower/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> updateBorrower(@RequestBody Borrower borrower, @PathVariable int id) {
-		if (borrower == null || borrower.getAddress() == null 
-				|| borrower.getName() == null || borrower.getPhone() == null) {
+		if (borrower == null || borrower.getAddress() == null || borrower.getName() == null
+				|| borrower.getPhone() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		borrower.setCardNo(id);
@@ -317,7 +303,7 @@ public class AdminController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	@DeleteMapping(path = "administrator/borrower/{id}")
 	public ResponseEntity<Void> deleteBorrower(@PathVariable int id) {
 		try {
@@ -329,44 +315,41 @@ public class AdminController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	@GetMapping(path = "/administrator/branchs", produces = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+
+	@GetMapping(path = "/administrator/branchs", produces = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<List<Branch>> getBranchs() {
 		try {
 			List<Branch> branchs = adminService.readBranch();
-			return new ResponseEntity<List<Branch>>(branchs,  HttpStatus.OK);
+			return new ResponseEntity<List<Branch>>(branchs, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	@GetMapping(path = "/administrator/branch/{id}", produces = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+
+	@GetMapping(path = "/administrator/branch/{id}", produces = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Branch> getBranch(@PathVariable int id) {
 		try {
 			Branch branch = adminService.readBranchById(id);
-			return new ResponseEntity<Branch>(branch,  HttpStatus.OK);
+			return new ResponseEntity<Branch>(branch, HttpStatus.OK);
 		} catch (IndexOutOfBoundsException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	@PostMapping(path = "administrator/branch", consumes = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+
+	@PostMapping(path = "administrator/branch", consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> saveBranch(@RequestBody Branch branch) {
 		if (branch == null || branch.getBranchName() == null || branch.getBranchAddress() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		try {
 			adminService.saveBranch(branch);
-			URI location = ServletUriComponentsBuilder
-					.fromCurrentRequest()
-					.path("/{id}")
-					.buildAndExpand(branch.getBranchId())
-					.toUri();
+			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+					.buildAndExpand(branch.getBranchId()).toUri();
 			return ResponseEntity.created(location).build();
 		} catch (SQLException e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -374,9 +357,9 @@ public class AdminController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	@PutMapping(path = "administrator/branch/{id}", consumes = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+
+	@PutMapping(path = "administrator/branch/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> updateBranch(@RequestBody Branch branch, @PathVariable int id) {
 		if (branch == null || branch.getBranchName() == null || branch.getBranchAddress() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -389,7 +372,7 @@ public class AdminController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	@DeleteMapping(path = "administrator/branch/{id}")
 	public ResponseEntity<Void> deleteBranch(@PathVariable int id) {
 		try {
@@ -401,45 +384,41 @@ public class AdminController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	@GetMapping(path = "/administrator/copies", produces = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+
+	@GetMapping(path = "/administrator/copies", produces = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<List<Copies>> getCopies() {
 		try {
 			List<Copies> copiess = adminService.readCopies();
-			return new ResponseEntity<List<Copies>>(copiess,  HttpStatus.OK);
+			return new ResponseEntity<List<Copies>>(copiess, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	@GetMapping(path = "/administrator/copy/{branchId}/{bookId}", produces = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+
+	@GetMapping(path = "/administrator/copy/{branchId}/{bookId}", produces = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Copies> getCopy(@PathVariable int branchId, @PathVariable int bookId) {
 		try {
 			Copies copies = adminService.readCopyById(branchId, bookId);
-			return new ResponseEntity<Copies>(copies,  HttpStatus.OK);
+			return new ResponseEntity<Copies>(copies, HttpStatus.OK);
 		} catch (IndexOutOfBoundsException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	@PostMapping(path = "administrator/copy", consumes = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+
+	@PostMapping(path = "administrator/copy", consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> saveCopies(@RequestBody Copies copies) {
-		if (copies.getBookId() == null 
-				|| copies.getBranchId() == null || copies.getNoOfCopies() == null) {
+		if (copies.getBookId() == null || copies.getBranchId() == null || copies.getNoOfCopies() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		try {
 			adminService.saveCopies(copies);
-			URI location = ServletUriComponentsBuilder
-					.fromCurrentRequest()
-					.path("{/branchId}/{bookId}")
-					.buildAndExpand(copies.getBranchId(), copies.getBookId())
-					.toUri();
+			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("{/branchId}/{bookId}")
+					.buildAndExpand(copies.getBranchId(), copies.getBookId()).toUri();
 			return ResponseEntity.created(location).build();
 		} catch (SQLException e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -447,11 +426,11 @@ public class AdminController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	@PutMapping(path = "administrator/copy/{branchId}/{bookId}", consumes = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-	public ResponseEntity<Void> updateCopies(
-			@RequestBody Copies copies, @PathVariable int branchId, @PathVariable int bookId) {
+
+	@PutMapping(path = "administrator/copy/{branchId}/{bookId}", consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
+	public ResponseEntity<Void> updateCopies(@RequestBody Copies copies, @PathVariable int branchId,
+			@PathVariable int bookId) {
 		if (copies.getNoOfCopies() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
@@ -464,7 +443,7 @@ public class AdminController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	@DeleteMapping(path = "administrator/copy/{brancId}/{bookId}")
 	public ResponseEntity<Void> deleteCopies(@PathVariable int branchId, @PathVariable int bookId) {
 		try {
@@ -476,45 +455,42 @@ public class AdminController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	@GetMapping(path = "/administrator/publishers", produces = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+
+	@GetMapping(path = "/administrator/publishers", produces = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<List<Publisher>> getPublishers() {
 		try {
 			List<Publisher> publishers = adminService.readPublisher();
-			return new ResponseEntity<List<Publisher>>(publishers,  HttpStatus.OK);
+			return new ResponseEntity<List<Publisher>>(publishers, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	@GetMapping(path = "/administrator/publisher/{id}", produces = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+
+	@GetMapping(path = "/administrator/publisher/{id}", produces = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Publisher> getPublisher(@PathVariable int id) {
 		try {
 			Publisher publisher = adminService.readPublisherById(id);
-			return new ResponseEntity<Publisher>(publisher,  HttpStatus.OK);
+			return new ResponseEntity<Publisher>(publisher, HttpStatus.OK);
 		} catch (IndexOutOfBoundsException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	@PostMapping(path = "administrator/publisher", consumes = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+
+	@PostMapping(path = "administrator/publisher", consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> savePublisher(@RequestBody Publisher publisher) {
-		if (publisher == null || publisher.getPublisherName() == null 
-				|| publisher.getPublisherAddress() == null || publisher.getPublisherPhone() == null) {
+		if (publisher == null || publisher.getPublisherName() == null || publisher.getPublisherAddress() == null
+				|| publisher.getPublisherPhone() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		try {
 			adminService.savePublisher(publisher);
-			URI location = ServletUriComponentsBuilder
-					.fromCurrentRequest()
-					.path("/{id}")
-					.buildAndExpand(publisher.getPublisherId())
-					.toUri();
+			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+					.buildAndExpand(publisher.getPublisherId()).toUri();
 			return ResponseEntity.created(location).build();
 		} catch (SQLException e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -522,12 +498,12 @@ public class AdminController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	@PutMapping(path = "administrator/publisher/{id}", consumes = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+
+	@PutMapping(path = "administrator/publisher/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> updatePublisher(@RequestBody Publisher publisher, @PathVariable int id) {
-		if (publisher == null || publisher.getPublisherName() == null 
-				|| publisher.getPublisherAddress() == null || publisher.getPublisherPhone() == null) {
+		if (publisher == null || publisher.getPublisherName() == null || publisher.getPublisherAddress() == null
+				|| publisher.getPublisherPhone() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		publisher.setPublisherId(id);
@@ -538,7 +514,7 @@ public class AdminController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	@DeleteMapping(path = "administrator/publisher/{id}")
 	public ResponseEntity<Void> deletePublisher(@PathVariable int id) {
 		try {

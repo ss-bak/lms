@@ -4,6 +4,7 @@ public class Borrower {
 	private Integer cardNo;
 	private String name;
 	private String address;
+	private String phone;
 
 	public Integer getCardNo() {
 		return cardNo;
@@ -37,5 +38,9 @@ public class Borrower {
 		this.phone = phone;
 	}
 
-	private String phone;
+	@Override
+	public String toString() {
+		return "Borrower [cardNo=" + cardNo + ", name=" + name + ", address=" + address + ", phone=" + phone + "]";
+	}
+
 }

@@ -49,4 +49,10 @@ public class Book {
 		this.authors = authors;
 	}
 
+	@Override
+	public String toString() {
+		return "Book [bookId=" + bookId + ", title=" + title + ", publisher=" + publisher + ", authors=" + authors
+				+ ", genres=" + genres + "]";
+	}
+
 }

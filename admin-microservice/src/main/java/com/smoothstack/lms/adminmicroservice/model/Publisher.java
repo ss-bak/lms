@@ -37,4 +37,11 @@ public class Publisher {
 	public void setPublisherPhone(String publisherPhone) {
 		this.publisherPhone = publisherPhone;
 	}
+
+	@Override
+	public String toString() {
+		return "Publisher [publisherId=" + publisherId + ", publisherName=" + publisherName + ", publisherAddress="
+				+ publisherAddress + ", publisherPhone=" + publisherPhone + "]";
+	}
+	
 }
