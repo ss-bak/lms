@@ -4,6 +4,9 @@ import java.net.URI;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -32,8 +35,8 @@ public class AdminController {
 	@Autowired
 	AdminService adminService;
 
-	@GetMapping(path = "/administrator/books", produces = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@GetMapping(path = "/administrator/books")
+	@Produces({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<List<Book>> getBooks() {
 		try {
 			List<Book> books = adminService.readBook();
@@ -43,8 +46,8 @@ public class AdminController {
 		}
 	}
 
-	@GetMapping(path = "/administrator/book/{id}", produces = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@GetMapping(path = "/administrator/book/{id}")
+	@Produces({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Book> getBook(@PathVariable int id) {
 		try {
 			Book book = adminService.readBookById(id);
@@ -56,8 +59,8 @@ public class AdminController {
 		}
 	}
 
-	@PostMapping(path = "administrator/book", consumes = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@PostMapping(path = "administrator/book")
+	@Consumes({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> saveBook(@RequestBody Book book) {
 		if (book == null || book.getPublisher().getPublisherId() == null || book.getTitle() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -77,8 +80,8 @@ public class AdminController {
 		}
 	}
 
-	@PutMapping(path = "administrator/book/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@PutMapping(path = "administrator/book/{id}")
+	@Consumes({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> updateBook(@RequestBody Book book, @PathVariable int id) {
 		if (book == null || book.getPublisher().getPublisherId() == null || book.getTitle() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -107,8 +110,8 @@ public class AdminController {
 		}
 	}
 
-	@GetMapping(path = "/administrator/authors", produces = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@GetMapping(path = "/administrator/authors")
+	@Produces({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<List<Author>> getAuthors() {
 		try {
 			List<Author> authors = adminService.readAuthor();
@@ -118,8 +121,8 @@ public class AdminController {
 		}
 	}
 
-	@GetMapping(path = "/administrator/author/{id}", produces = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@GetMapping(path = "/administrator/author/{id}")
+	@Produces({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Author> getAuthor(@PathVariable int id) {
 		try {
 			Author author = adminService.readAuthorById(id);
@@ -131,8 +134,8 @@ public class AdminController {
 		}
 	}
 
-	@PostMapping(path = "administrator/author", consumes = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@PostMapping(path = "administrator/author")
+	@Consumes({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> saveAuthor(@RequestBody Author author) {
 		if (author == null || author.getAuthorName() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -149,8 +152,8 @@ public class AdminController {
 		}
 	}
 
-	@PutMapping(path = "administrator/author/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@PutMapping(path = "administrator/author/{id}")
+	@Consumes({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> updateAuthor(@RequestBody Author author, @PathVariable int id) {
 		if (author == null || author.getAuthorName() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -176,8 +179,8 @@ public class AdminController {
 		}
 	}
 
-	@GetMapping(path = "/administrator/genres", produces = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@GetMapping(path = "/administrator/genres")
+	@Produces({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<List<Genre>> getGenres() {
 		try {
 			List<Genre> genres = adminService.readGenre();
@@ -187,8 +190,8 @@ public class AdminController {
 		}
 	}
 
-	@GetMapping(path = "/administrator/genre/{id}", produces = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@GetMapping(path = "/administrator/genre/{id}")
+	@Produces({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Genre> getGenre(@PathVariable int id) {
 		try {
 			Genre genre = adminService.readGenreById(id);
@@ -200,8 +203,8 @@ public class AdminController {
 		}
 	}
 
-	@PostMapping(path = "administrator/genre", consumes = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@PostMapping(path = "administrator/genre")
+	@Consumes({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> saveGenre(@RequestBody Genre genre) {
 		if (genre == null || genre.getGenreName() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -218,8 +221,8 @@ public class AdminController {
 		}
 	}
 
-	@PutMapping(path = "administrator/genre/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@PutMapping(path = "administrator/genre/{id}")
+	@Consumes({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> updateGenre(@RequestBody Genre genre, @PathVariable int id) {
 		if (genre == null || genre.getGenreName() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -245,8 +248,8 @@ public class AdminController {
 		}
 	}
 
-	@GetMapping(path = "/administrator/borrowers", produces = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@GetMapping(path = "/administrator/borrowers")
+	@Produces({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<List<Borrower>> getBorrowers() {
 		try {
 			List<Borrower> borrowers = adminService.readBorrower();
@@ -256,8 +259,8 @@ public class AdminController {
 		}
 	}
 
-	@GetMapping(path = "/administrator/borrower/{id}", produces = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@GetMapping(path = "/administrator/borrower/{id}")
+	@Produces({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Borrower> getBorrower(@PathVariable int id) {
 		try {
 			Borrower borrower = adminService.readBorrowerById(id);
@@ -269,8 +272,8 @@ public class AdminController {
 		}
 	}
 
-	@PostMapping(path = "administrator/borrower", consumes = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@PostMapping(path = "administrator/borrower")
+	@Consumes({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> saveBorrower(@RequestBody Borrower borrower) {
 		if (borrower == null || borrower.getAddress() == null || borrower.getName() == null
 				|| borrower.getPhone() == null) {
@@ -288,8 +291,8 @@ public class AdminController {
 		}
 	}
 
-	@PutMapping(path = "administrator/borrower/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@PutMapping(path = "administrator/borrower/{id}")
+	@Consumes({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> updateBorrower(@RequestBody Borrower borrower, @PathVariable int id) {
 		if (borrower == null || borrower.getAddress() == null || borrower.getName() == null
 				|| borrower.getPhone() == null) {
@@ -316,8 +319,8 @@ public class AdminController {
 		}
 	}
 
-	@GetMapping(path = "/administrator/branchs", produces = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@GetMapping(path = "/administrator/branchs")
+	@Produces({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<List<Branch>> getBranchs() {
 		try {
 			List<Branch> branchs = adminService.readBranch();
@@ -327,8 +330,8 @@ public class AdminController {
 		}
 	}
 
-	@GetMapping(path = "/administrator/branch/{id}", produces = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@GetMapping(path = "/administrator/branch/{id}")
+	@Produces({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Branch> getBranch(@PathVariable int id) {
 		try {
 			Branch branch = adminService.readBranchById(id);
@@ -340,8 +343,8 @@ public class AdminController {
 		}
 	}
 
-	@PostMapping(path = "administrator/branch", consumes = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@PostMapping(path = "administrator/branch")
+	@Consumes({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> saveBranch(@RequestBody Branch branch) {
 		if (branch == null || branch.getBranchName() == null || branch.getBranchAddress() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -358,8 +361,8 @@ public class AdminController {
 		}
 	}
 
-	@PutMapping(path = "administrator/branch/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@PutMapping(path = "administrator/branch/{id}")
+	@Consumes({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> updateBranch(@RequestBody Branch branch, @PathVariable int id) {
 		if (branch == null || branch.getBranchName() == null || branch.getBranchAddress() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -385,8 +388,8 @@ public class AdminController {
 		}
 	}
 
-	@GetMapping(path = "/administrator/copies", produces = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@GetMapping(path = "/administrator/copies")
+	@Produces({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<List<Copies>> getCopies() {
 		try {
 			List<Copies> copiess = adminService.readCopies();
@@ -396,8 +399,8 @@ public class AdminController {
 		}
 	}
 
-	@GetMapping(path = "/administrator/copy/{branchId}/{bookId}", produces = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@GetMapping(path = "/administrator/copy/{branchId}/{bookId}")
+	@Produces({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Copies> getCopy(@PathVariable int branchId, @PathVariable int bookId) {
 		try {
 			Copies copies = adminService.readCopyById(branchId, bookId);
@@ -409,8 +412,8 @@ public class AdminController {
 		}
 	}
 
-	@PostMapping(path = "administrator/copy", consumes = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@PostMapping(path = "administrator/copy")
+	@Consumes({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> saveCopies(@RequestBody Copies copies) {
 		if (copies.getBookId() == null || copies.getBranchId() == null || copies.getNoOfCopies() == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -427,8 +430,8 @@ public class AdminController {
 		}
 	}
 
-	@PutMapping(path = "administrator/copy/{branchId}/{bookId}", consumes = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@PutMapping(path = "administrator/copy/{branchId}/{bookId}")
+	@Consumes({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> updateCopies(@RequestBody Copies copies, @PathVariable int branchId,
 			@PathVariable int bookId) {
 		if (copies.getNoOfCopies() == null) {
@@ -456,8 +459,8 @@ public class AdminController {
 		}
 	}
 
-	@GetMapping(path = "/administrator/publishers", produces = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@GetMapping(path = "/administrator/publishers")
+	@Produces({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<List<Publisher>> getPublishers() {
 		try {
 			List<Publisher> publishers = adminService.readPublisher();
@@ -467,8 +470,8 @@ public class AdminController {
 		}
 	}
 
-	@GetMapping(path = "/administrator/publisher/{id}", produces = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@GetMapping(path = "/administrator/publisher/{id}")
+	@Produces({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Publisher> getPublisher(@PathVariable int id) {
 		try {
 			Publisher publisher = adminService.readPublisherById(id);
@@ -480,8 +483,8 @@ public class AdminController {
 		}
 	}
 
-	@PostMapping(path = "administrator/publisher", consumes = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@PostMapping(path = "administrator/publisher")
+	@Consumes({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> savePublisher(@RequestBody Publisher publisher) {
 		if (publisher == null || publisher.getPublisherName() == null || publisher.getPublisherAddress() == null
 				|| publisher.getPublisherPhone() == null) {
@@ -499,8 +502,8 @@ public class AdminController {
 		}
 	}
 
-	@PutMapping(path = "administrator/publisher/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@PutMapping(path = "administrator/publisher/{id}")
+	@Consumes({ MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Void> updatePublisher(@RequestBody Publisher publisher, @PathVariable int id) {
 		if (publisher == null || publisher.getPublisherName() == null || publisher.getPublisherAddress() == null
 				|| publisher.getPublisherPhone() == null) {
