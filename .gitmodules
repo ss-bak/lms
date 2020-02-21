@@ -10,3 +10,6 @@
 [submodule "lms-administrator-microservice"]
 	path = lms-administrator-microservice
 	url = git@github.com:ss-bak/lms-administrator-microservice.git
+[submodule "lms-microservice-discovery"]
+	path = lms-microservice-discovery
+	url = git@github.com:ss-bak/lms-microservice-discovery.git
