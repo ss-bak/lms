@@ -1,3 +1,12 @@
-[submodule "lms-borrower"]
-	path = lms-borrower
-	url = git@github.com:Jindanupajit-SS/lms-borrower.git
+[submodule "lms-orchestrator"]
+	path = lms-orchestrator
+	url = git@github.com:ss-bak/lms-orchestrator.git
+[submodule "lms-borrower-microservice"]
+	path = lms-borrower-microservice
+	url = git@github.com:ss-bak/lms-borrower-microservice.git
+[submodule "lms-librarian-microservice"]
+	path = lms-librarian-microservice
+	url = git@github.com:ss-bak/lms-librarian-microservice.git
+[submodule "lms-administrator-microservice"]
+	path = lms-administrator-microservice
+	url = git@github.com:ss-bak/lms-administrator-microservice.git
